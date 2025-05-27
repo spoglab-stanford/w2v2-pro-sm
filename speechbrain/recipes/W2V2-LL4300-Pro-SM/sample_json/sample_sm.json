@@ -1,0 +1,14 @@
+{
+    "0815148374": {
+      "wav": "/ws/ifp-10_1/hasegawa/jialuli3/babblecor/clips/clips_corpus/0815148374.wav",
+      "label": "Junk"
+    },
+    "0499728595": {
+      "wav": "/ws/ifp-10_1/hasegawa/jialuli3/babblecor/clips/clips_corpus/0499728595.wav",
+      "label": "Junk"
+    },
+    "0826209937": {
+      "wav": "/ws/ifp-10_1/hasegawa/jialuli3/babblecor/clips/clips_corpus/0826209937.wav",
+      "label": "Non-canonical"
+    }
+}

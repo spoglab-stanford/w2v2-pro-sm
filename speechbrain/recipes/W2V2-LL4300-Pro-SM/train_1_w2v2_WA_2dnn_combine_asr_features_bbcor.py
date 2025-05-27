@@ -198,7 +198,7 @@ class EmoIdBrain(sb.Brain):
             # Print predictions or save to file
             predictions_df = pd.DataFrame(self.predictions_list)
             #CHANGE
-            predictions_df.to_csv(f"{hparams["output_folder"]}/predictions.csv", index=False)
+            predictions_df.to_csv("/path/to/predictions.csv", index=False)
 
             print(predictions_df.head())
 
