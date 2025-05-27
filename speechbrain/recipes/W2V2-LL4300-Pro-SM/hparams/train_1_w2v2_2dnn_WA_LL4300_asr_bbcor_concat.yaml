@@ -64,8 +64,9 @@ test_dataloader_options:
 wav2vec2_hub: "facebook/wav2vec2-base"
 
 # Wav2vec2 encoder
+# CHANGE
 wav2vec2: &id001 !new:speechbrain.lobes.models.fairseq_wav2vec.FairseqWav2Vec2
-  pretrained_path: /path/to/speechbrain/recipes/BabbleCor/checkpoint_best.pt
+  pretrained_path: /path/to/checkpoint_best.pt
   output_norm: true
   freeze: False
   output_all_hiddens: true
