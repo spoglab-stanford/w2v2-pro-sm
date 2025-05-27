@@ -53,7 +53,7 @@ conda activate w2v2-ll4300-pro-sm
 
 7. Update all the paths and seed in ../hparams/train_1_w2v2_2dnn_WA_LL4300_asr_bbcor_concat.yaml and train_1_w2v2_WA_2dnn_combine_asr_features_bbcor.py 
 
-8. Run the model. Your predicted labels will be in the file you set in train_1_w2v2_WA_2dnn_combine_asr_features_bbcor.py 
+8. Run the model. Your predicted labels will be in the file you set in train_1_w2v2_WA_2dnn_combine_asr_features_bbcor.py and the label mapping is: "Non-Canonical": 1, "Canonical": 2, "Laughing": 3, "Crying": 4,"Junk": 0
 ```
 python train_1_w2v2_WA_2dnn_combine_asr_features_bbcor.py train_1_w2v2_2dnn_WA_LL4300_asr_bbcor_concat.yaml
 ```
