@@ -1,89 +1,78 @@
-#UPDATE!!! this is is not up to date
-## Recipe for children's vocalization classification with features from phoneme Recognition of BabbleCor   
-This recipe is developed based on SpeechBrain toolkit. This recipe contains scripts for classifying BabbleCor used in the [Baby Sound Sub-Challenge in 2019 InterSpeech Paralinguistic Chanllenges](https://www.isca-archive.org/interspeech_2019/schuller19_interspeech.pdf) with wav2vec 2.0 models.
-
-### About BabbleCor
-[BabbleCor](https://pubmed.ncbi.nlm.nih.gov/33497512/) contains 11k short audio clips of 52 healthy children aged 2-36 months old. Five types of vocalizations are classified, including 
-- canonical babbling (containing a consonant to vowel transition)
-- non-canonical babbling (not containing a consonant to vowel transition)
-- laughing
-- crying
-- junk
-
-## Uses
-### Install SpeechBrain
-```
-git clone https://github.com/speechbrain/speechbrain.git
-cd speechbrain
-pip install -r requirements.txt
-pip install --editable .
+# Employing self-supervised learning models for cross-linguistic child speech maturity classification
 
 ```
-
-### Check out this branch
+/path/to/w2v2-pro-sm/speechbrain/recipes/W2V2-LL4300-Pro-SM
+├── 2025 (example seed)
+│   ├── myst_checkpoints
+│   │   ├── CKPT+2025-02-09+02-37-58+00 (from https://huggingface.co/spoglab/w2v2-pro-sm)
+│   │   │   ├── brain.ckpt
+│   │   │   ├── CKPT.yaml
+│   │   │   ├── counter.ckpt
+│   │   │   ├── dataloader-TRAIN.ckpt
+│   │   │   ├── lr_annealing_output.ckpt
+│   │   │   ├── lr_annealing_wav2vec2.ckpt
+│   │   │   ├── model.ckpt
+│   │   │   ├── optimizer.ckpt
+│   │   │   ├── wav2vec2.ckpt
+│   │   │   └── wav2vec2_opt.ckpt
+│   │   ├── wav2vec_asr.ckpt (from https://huggingface.co/spoglab/w2v2-pro-sm)
+│   ├── predictions.csv
+├── checkpoint_best.pt (from https://huggingface.co/spoglab/w2v2-pro-sm)
+├── convert_to_json.py
+├── environment.yaml
+├── fairseq_wav2vec.py
+├── hparams
+│   └── train_1_w2v2_2dnn_WA_LL4300_asr_bbcor_concat.yaml
+├── Readme.md
+├── sample_json
+│   └── sample_sm.json
+└── train_1_w2v2_WA_2dnn_combine_asr_features_bbcor.py
 ```
-git clone https://github.com/jialuli3/speechbrain.git
-cd speechbrain
-git checkout -b infant-voc-classification
-git pull origin infant-voc-classification
+## Steps for running inference with W2V2-LL4300-Pro-SM
+The following steps are to be followed if you wish to use W2V2-LL4300-Pro-SM for inference on your data.
+
+1. Clone this repository:
 ```
-
-### Change to BabbleCor directory
+git clone https://github.com/spoglab-stanford/w2v2-pro-sm
 ```
-cd recipes/BabbleCor
+2. Navigate to the W2V2-LL4300-Pro-SM folder in the repository
 ```
-
-### Download wav2vec2 model fine-tuned with children's phoneme recognition task on Providence corpus
-
-https://huggingface.co/lijialudew/wav2vec_children_ASR
-
-
-### Prepare data in json format ###
-To make data compatible with this script, prepare your data similar as the following json format
+cd ../w2v2-pro-sm/speechbrain/recipes/W2V2-LL4300-Pro-SM
 ```
-{
-  "sample_data1": {
-    "wav": "path/to/your/wav/file",
-    "label": "one of the babblecor label type",
-    "child_ID": childen's ID,
-    "hyp_pr": hypothesis transcript generated from the phoneme recognition model # this is necessary for inferencing the phoneme recognition transcript as auxiliary task
-    }
-}
+3. Create and activate a new conda virtual environment using the required packages to run the model
 ```
-
-Sample json file we used in our experiments can be found in **sample_json/sample_babblecor.json**
-
-### Make yaml files in *hparams* folder compatiable with your dataset
-- Change data paths in *train_annotation*, *valid_annotation*, and *test_annotation*
-- To train with additional phoneme recognition features, copy and paste *wav2vec2_asr.ckpt* from pretrained wav2vec checkpoints fine-tuned with children's phoneme recognition to *save_folder* directory.
-
-### Fine-tune wav2vec2 model with BabbleCor ###
-
-Run the following commands to fine-tune wav2vec2 using our developed recipe
-
+conda env create -f environment.yaml
+conda activate w2v2-ll4300-pro-sm
 ```
-# Train wav2vec2 without phoneme recognition features
-python train_1_w2v2_WA_2dnn.py hparams/train_1_w2v2_2dnn_WA_LL4300_bbcor.yaml
+4. Create a new directory named after the seed you set in ../hparams/train_1_w2v2_2dnn_WA_LL4300_asr_bbcor_concat.yaml that will hold your model outputs with a subdirectory named myst-checkpoints. Refer to the file tree at the top of this page for more details.
 
-# Train wav2vec2 with phoneme recognition features
-python train_1_w2v2_WA_2dnn_combine_asr_features_bbcor.py hparams/train_1_w2v2_2dnn_WA_LL4300_asr_bbcor_concat.yaml
+5. Download the requisite model checkpoints from https://huggingface.co/spoglab/w2v2-pro-sm and place them in the correct locations according the file tree above.
+
+6. (If needed) Convert your CSVs to JSON. You can refer to the convert_to_json.py code or refer to the expected format in the sample_json folder.
+    - If you are doing inference, you can set the label to a random label (i.e. Junk) and ignore the statistical metrics the output will produce
+
+7. Update all the paths and seed in ../hparams/train_1_w2v2_2dnn_WA_LL4300_asr_bbcor_concat.yaml and train_1_w2v2_WA_2dnn_combine_asr_features_bbcor.py 
+
+8. Run the model. Your predicted labels will be in the file you set in train_1_w2v2_WA_2dnn_combine_asr_features_bbcor.py 
 ```
-
+python train_1_w2v2_WA_2dnn_combine_asr_features_bbcor.py train_1_w2v2_2dnn_WA_LL4300_asr_bbcor_concat.yaml
+```
 ### Paper/BibTex Citation
 If you found this recipe or our paper helpful, please cite us as
 
 ```
-@article{li2023enhancing,
-  title={Enhancing Child Vocalization Classification with Phonetically-Tuned Embeddings for Assisting Autism Diagnosis},
-  author={Li, Jialu and Hasegawa-Johnson, Mark and Karahalios, Karrie},
+@article{zhang2025employing,
+  title={Employing self-supervised learning models for cross-linguistic child speech maturity classification},
+  author={Zhang, Theo and Suresh, Madurya and Warlaumont, Anne and Hitczenko, Kasia and Cristia, Alejandrina and Cychosz, Margaret},
   booktitle={Interspeech},
-  year={2024}
+  year={2025}
 }
 ```
 
+### Acknowledgement
+Thank you to Jialu Li (jialuli3@illinois.edu) for providing the foundational work for this model, including the code and the pretrained model we finetuned. Jialu's enthusiastic assistance allowed us to utilize her code to create the new state-of-the-art model for this task.
+
 ### Contact
-Jialu Li (she, her, hers)
+Theo Zhang
 
-E-mail: jialuli3@illinois.edu
-
-Homepage: https://sites.google.com/view/jialuli/
+E-mail: theo.zhang@ucla.edu
