@@ -70,7 +70,7 @@ If you found this recipe or our paper helpful, please cite us as
 ```
 
 ### Acknowledgement
-Thank you to Jialu Li (jialuli3@illinois.edu) for providing the foundational work for this model, including the code and the pretrained model we finetuned. Jialu's enthusiastic assistance allowed us to utilize her code to create the new state-of-the-art model for this task.
+Thank you to Jialu Li (jialuli3@illinois.edu) for providing the foundational work for this model, including the code (https://github.com/jialuli3/speechbrain/tree/ef9038cd076dd2789755f48c0f95955c8570be5a/recipes/BabbleCor) and the pretrained model we finetuned. Jialu's enthusiastic assistance allowed us to utilize her code to create the new state-of-the-art model for this task.
 
 ### Contact
 Theo Zhang
