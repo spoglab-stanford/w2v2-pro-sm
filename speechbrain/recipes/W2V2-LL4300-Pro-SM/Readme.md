@@ -5,16 +5,11 @@
 ├── 2025 (example seed)
 │   ├── myst_checkpoints
 │   │   ├── CKPT+2025-02-09+02-37-58+00 (from https://huggingface.co/spoglab/w2v2-pro-sm)
-│   │   │   ├── brain.ckpt
-│   │   │   ├── CKPT.yaml
-│   │   │   ├── counter.ckpt
-│   │   │   ├── dataloader-TRAIN.ckpt
-│   │   │   ├── lr_annealing_output.ckpt
-│   │   │   ├── lr_annealing_wav2vec2.ckpt
-│   │   │   ├── model.ckpt
-│   │   │   ├── optimizer.ckpt
-│   │   │   ├── wav2vec2.ckpt
-│   │   │   └── wav2vec2_opt.ckpt
+│   │   │   ├── ...
+|   |   ├── CKPT+2025-02-08+21-43-25+00 (from https://huggingface.co/spoglab/w2v2-pro-sm)
+│   │   │   ├── ...
+|   |   ├── wav2vec2_checkpoint
+│   │   │   ├── ...
 │   │   ├── wav2vec_asr.ckpt (from https://huggingface.co/spoglab/w2v2-pro-sm)
 │   ├── predictions.csv
 ├── checkpoint_best.pt (from https://huggingface.co/spoglab/w2v2-pro-sm)
