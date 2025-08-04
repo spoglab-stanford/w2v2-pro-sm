@@ -23,7 +23,13 @@
 ```
 ## Steps for running inference with W2V2-LL4300-Pro-SM
 The following steps are to be followed if you wish to use W2V2-LL4300-Pro-SM for inference on your data.
-
+0. Install SpeechBrain
+```
+git clone https://github.com/speechbrain/speechbrain.git
+cd speechbrain
+pip install -r requirements.txt
+pip install --editable .
+```
 1. Clone this repository:
 ```
 git clone https://github.com/spoglab-stanford/w2v2-pro-sm
